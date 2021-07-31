@@ -1,11 +1,22 @@
 # GitOps-Vault
-after you set up vault, you need to update the configuration of your argocd to download & register the used plugin "AVP" either:
+Manging application secrets is not an easy task in GitOps due to ***git as a single source of truth*** philosophy !   
+A lot of efforts have been done to mitigate secret exposure risk, one of which is using [HashiCorp- Vault](https://www.vaultproject.io/).   
+Recently, IBM team developed a plugin customized to argocd & vault, it aimed to find a simple way to utilize Vault without having to rely on an operator or custom resource definition.   
+- To authenticate vault with argocd, it follows vault approle method:     
+![Image_12](https://learn.hashicorp.com/img/vault-auth-basic-2.png)     
+- The config of the admin side, some of it done as env vars.   
+- The Application in the above pic equivalent to the plugin job.     
+
+The rest of this small doc is a demo of the plugin and GitOps, enjoy! :popcorn:    
+
+# Argocd-Vault-Plugin
+After you set up vault, you need to update the configuration of your argocd to download & register the used plugin "AVP" either:
 - using initContainer to download the plugin 
 - building a new image for argocd repo server
 
 in both way, you have to edit the argocd-cm with the default plugin command to run.
 
-## Notes:
+## Notes: :loudspeaker:
 - `AVP` prefix is super important! :rotating_light::fire:   
 ![Image 1](image/avp-prefix.png)   
 - if your vault in same cluster, then the address is : `http://SERVICENAME.NAMESPACE.svc:PORT`, otherwise the plugin will not work! :zap:   

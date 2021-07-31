@@ -11,7 +11,7 @@ kubectl exec -ti vault-0 -- vault operator unseal # ... Unseal Key n
 vault login
 vault auth enable approle
 # Create a policy named argocd
-vault write auth/approle/role/my-role token_policies="argocd"
+vault write auth/approle/role/my-role token_policies="argocd" token_ttl=20m token_max_ttl=30m
 # Role-ID&Secret-ID value to be used later
 vault read auth/approle/role/my-role/role-id
 vault write -f auth/approle/role/my-role/secret-id
