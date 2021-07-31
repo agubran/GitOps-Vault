@@ -10,14 +10,14 @@ in both way, you have to edit the argocd-cm with the default plugin command to r
 ![Image 1](image/avp-prefix.png)   
 - if your vault in same cluster, then the address is : `http://SERVICENAME.NAMESPACE.svc:PORT`, otherwise the plugin will not work! :zap:   
 ![Image 2](image/address.png)   
-- set the write permissions and path in the attached policy, otherwise you will get a permission denied issue! :stop_sign:   
+- set the right permissions and path in the attached policy, otherwise you will get a permission denied issue! :stop_sign:   
 didn't take a screenshot :( :grimacing:, so ...   
 - make sure of the secret id ttl, if you are not an expert with vault, I recommand leaving it default way!:vertical_traffic_light:   
 - using vault http api from inside a pod where vault deployed is super useful way of debugging!:construction:   
 
 # Implementation:
 
-## preparation
+## Preparation
 To manage secrets using Vault plugin in GitOps:   
 
 ### Updating k8s secret file with:
@@ -70,10 +70,20 @@ Updated value in Vault
 
 # Quick Compersion Between Secret Management Tools used in GitOps: 
 
+Here is a small compersion between two common secret managment tools that are used in GitOps:
+
 | Sealed Secret | AVP           |
 | ------------- | ------------- |
 | Deals with Secret Object Only  | Deals with all k8s Object as long as it has avp annotation  |
 | Easy setup | Needs more steps  |
 | who has access to both git and k8s cluster can see the secret's value | the secret stored in Vault, therefore you need access to it to access secret's vaule 
+
+# References
+- Followed: https://itnext.io/argocd-secret-management-with-argocd-vault-plugin-539f104aff05
+- https://www.vaultproject.io/docs -> 
+  - https://www.vaultproject.io/docs/auth/approle
+  - https://www.vaultproject.io/docs/concepts/policies
+- https://argoproj.github.io/argo-cd/getting_started/
+- https://github.com/IBM/argocd-vault-plugin
 
 
