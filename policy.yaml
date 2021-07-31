@@ -1,2 +1,2 @@
-path "avp/data/*" {  
+path "avp/data/*" {
   capabilities = [ "create", "read", "update", "delete", "list" ]}

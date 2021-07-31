@@ -2780,7 +2780,6 @@ spec:
           name: tls-certs
         - mountPath: /app/config/server/tls
           name: argocd-repo-server-tls
-         
       serviceAccountName: argocd-server
       volumes:
       - emptyDir: {}
