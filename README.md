@@ -5,7 +5,7 @@ after you set up vault, you need to update the configuration of your argocd to d
 
 in both way, you have to edit the argocd-cm with the default plugin command to run.
 
-# Notes:
+## Notes:
 - `AVP` prefix is super important! :rotating_light::fire:   
 ![Image 1](image/avp-prefix.png)   
 - if your vault in same cluster, then the address is : `http://SERVICENAME.NAMESPACE.svc:PORT`, otherwise the plugin will not work! :zap:   
@@ -15,25 +15,25 @@ didn't take a screenshot :( :grimacing:, so ...
 - make sure of the secret id ttl, if you are not an expert with vault, I recommand leaving it default way!:vertical_traffic_light:   
 - using vault http api from inside a pod where vault deployed is super useful way of debugging!:construction:   
 
-# implementation:
+# Implementation:
 
 ## preparation
 To manage secrets using Vault plugin in GitOps:   
 
 ### Updating k8s secret file with:
 1. Add annotation with the secret path in vault ( there is another way to do so, you can find it [here](https://github.com/IBM/argocd-vault-plugin#how-it-works))   
-2. Replace the secret value with `<KEY-NAME>`, by encoding it this way, the plugin will recognize it and replace it with the real value   
+2. Replace the secret value with `<KEY-NAME>`, by encoding it this way, the plugin will recognize it and replace it with the real value, EXAMPLE:   
 
 ![Image 3](image/secret-yaml.png)   
 
-you can find it [here](https://github.com/saloyiana/demo)   
+You can find it [here](https://github.com/saloyiana/demo)   
 
 ### Argocd 
 You need to select the plugin while creating the application whether using the UI or YAML:   
 
 ![Image 4](image/argocd-plugin.png)   
 
-## Tool Result:
+## Tool's Result:
 
 - creating an application with the plugin in Argocd, after it deployed:   
 ![Image 5](image/argocd.png)   
@@ -68,7 +68,7 @@ Updated value in Vault
 ![Image 11](image/vault-updated.png)   
 
 
-# Quick Compersion Between Secret Management Tools used GitOps: 
+# Quick Compersion Between Secret Management Tools used in GitOps: 
 
 | Sealed Secret | AVP           |
 | ------------- | ------------- |
