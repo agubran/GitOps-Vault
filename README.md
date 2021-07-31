@@ -6,9 +6,9 @@ after you set up vault, you need to update the configuration of your argocd to d
 in both way, you have to edit the argocd-cm with the default plugin command to run.
 
 # Notes:
-- AVP prefix is super important! :rotating_light::fire:
+- `AVP` prefix is super important! :rotating_light::fire:
 ![Image 1](image/avp-prefix.png)
-- if your vault in same cluster, then the address is : http://SERVICENAME.NAMESPACE.svc:PORT, otherwise the plugin will not work! :zap:
+- if your vault in same cluster, then the address is : `http://SERVICENAME.NAMESPACE.svc:PORT`, otherwise the plugin will not work! :zap:
 ![Image 2](image/address.png)
 - set the write permissions and path in the attached policy, otherwise you will get a permission denied issue! :stop_sign:
 didn't take a screenshot :( :grimacing:, so ...
@@ -22,7 +22,7 @@ To manage secrets using Vault plugin in GitOps:
 
 ### Updating k8s secret file with:
 1. Add annotation with the secret path in vault ( there is another way to do so, you can find it [here](https://github.com/IBM/argocd-vault-plugin#how-it-works))
-2. Replace the secret value with <KEY-NAME>, by encoding it this way, the plugin will recognize it and replace it with the real value
+2. Replace the secret value with `<KEY-NAME>`, by encoding it this way, the plugin will recognize it and replace it with the real value
 
 ![Image 3](image/secret-yaml.png)
 
@@ -64,7 +64,7 @@ Depending on the Sync policy of Argocd application
 after syncing, Check the secret 
 ![Image 10](image/secret-updated.png)
 
-Updated Value in Vault 
+Updated value in Vault 
 ![Image 11](image/vault-updated.png)
 
 
