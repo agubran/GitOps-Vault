@@ -2645,25 +2645,13 @@ spec:
               topologyKey: kubernetes.io/hostname
             weight: 5
       automountServiceAccountToken: false
-      initContainers:
-      - name: download-tools
-        image: alpine:3.8
-        command: [sh, -c]
-        args:
-          - >-
-            wget -O argocd-vault-plugin https://github.com/IBM/argocd-vault-plugin/releases/download/v1.1.1/argocd-vault-plugin_1.1.1_linux_amd64 &&
-            chmod +x argocd-vault-plugin &&
-            mv argocd-vault-plugin /custom-tools/
-        volumeMounts:
-          - mountPath: /custom-tools
-            name: custom-tools
       containers:
       - command:
         - uid_entrypoint.sh
         - argocd-repo-server
         - --redis
         - argocd-redis:6379
-        image: quay.io/argoproj/argocd:v2.0.4
+        image: saloyiana/argocd-vault
         imagePullPolicy: Always
         livenessProbe:
           failureThreshold: 3
@@ -2673,6 +2661,9 @@ spec:
           initialDelaySeconds: 30
           periodSeconds: 5
         name: argocd-repo-server
+        envFrom:
+        - secretRef:
+            name: argocd-vault-plugin-credentials
         ports:
         - containerPort: 8081
         - containerPort: 8084
@@ -2698,13 +2689,6 @@ spec:
           name: gpg-keyring
         - mountPath: /app/config/reposerver/tls
           name: argocd-repo-server-tls
-          volumeMounts:
-        - name: custom-tools
-          mountPath: /usr/local/bin/argocd-vault-plugin
-          subPath: argocd-vault-plugin
-        envFrom:
-          - secretRef:
-              name: argocd-vault-plugin-credentials
       volumes:
       - configMap:
           name: argocd-ssh-known-hosts-cm
@@ -2728,8 +2712,6 @@ spec:
             path: ca.crt
           optional: true
           secretName: argocd-repo-server-tls
-      - name: custom-tools
-        emptyDir: {}
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -2798,6 +2780,7 @@ spec:
           name: tls-certs
         - mountPath: /app/config/server/tls
           name: argocd-repo-server-tls
+         
       serviceAccountName: argocd-server
       volumes:
       - emptyDir: {}
@@ -3005,16 +2988,3 @@ spec:
       app.kubernetes.io/name: argocd-server
   policyTypes:
   - Ingress
----
-kind: Secret
-apiVersion: v1
-metadata:
-  name: argocd-vault-plugin-credentials
-  namespace: argocd
-type: Opaque
-data:
-  AVP_AUTH_TYPE: approle
-  AVP_ROLE_ID: ae7c0068-eef2-f903-29cd-f105ce55287c
-  AVP_SECRET_ID=514e8ea4-b3d1-d29f-9624-c52e355c1425
-  AVP_TYPE=vault
-  AVP_VAULT_ADDR="http://vault:8200"
