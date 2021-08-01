@@ -3,7 +3,7 @@ Manging application secrets is not an easy task in GitOps due to ***git as a sin
 A lot of efforts have been done to mitigate secret exposure risk, one of which is using [HashiCorp- Vault](https://www.vaultproject.io/).   
 Recently, IBM team developed a plugin customized to argocd & vault, it aimed to find a simple way to utilize Vault without having to rely on an operator or custom resource definition.   
 - To authenticate vault with argocd, it follows vault approle method:     
-![Image_12](https://learn.hashicorp.com/img/vault-auth-basic-2.png)     
+![Image_12](https://learn.hashicorp.com/img/vault-approle-workflow.png)     
 - The config of the admin side, some of it done as env vars.   
 - The Application in the above pic equivalent to the plugin job.     
 
